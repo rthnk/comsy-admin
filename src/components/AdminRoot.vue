@@ -17,6 +17,12 @@ export default {
   name: "AdminRoot",
   data: () => ({
     publicPath: process.env.BASE_URL
-  })
+  }),
+  computed: {
+  },
+  created() {
+  },
+  methods: {
+  }
 };
 </script>

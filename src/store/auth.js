@@ -17,7 +17,7 @@ export function getAxiosInstance(token) {
     }
     window.$axios = axios.create({
       baseURL: BASE_URL,
-      timeout: 1000,
+      timeout: 10000,
       headers: {
         Authorization: bToken
       }
@@ -70,12 +70,24 @@ export const actions = {
   logout({ commit }) {
     commit('setToken', null);
   },
-  async login({ commit }, data) {
+  async changePassword(_, data) {
+    const resp = await getAxiosInstance().post('/auth/change-password', {
+      currentPassword: data.currentPassword,
+      newPassword: data.newPassword
+    });
+    return resp.status === 201;
+  },
+  async login({ commit, state }, data) {
     try {
       const resp = await getAxiosInstance().post('/auth/login', data);
       const isValid = await validateToken(resp.data.data.token);
       if (resp.status === 200 && isValid) {
         commit('setToken', resp.data.data.token);
+        if (state.user.role === 'reader') {
+          console.error(`User is a reader, can't login.`);
+          commit('setToken', null);
+          return false;
+        }
         return true;
       }
       return false;

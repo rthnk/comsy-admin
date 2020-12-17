@@ -4,9 +4,10 @@
     <v-file-input
       v-model="info"
       :label="label"
-      :prepend-icon="label.toLowerCase().includes('image') ? 'mdi-camera' : 'mdi-file'"
+      prepend-icon="mdi-camera"
       outlined
       dense
+      :rules="rules"
       @change="updateFile"
       @click:clear="clearFile"
     />
@@ -19,8 +20,12 @@ export default {
   name: "FileInput",
   props: {
     label: {
-      String,
+      type: String,
       default: ''
+    },
+    rules: {
+      type: Array,
+      default: () => []
     }
   },
   data: () => ({
@@ -39,16 +44,20 @@ export default {
       if (!this.info) {
         return;
       }
-      const buff = await this.info.arrayBuffer();
-      const parser = window.ExifParser.create(buff);
-      const result = await parser.parse()
-      this.$set(this, 'meta', result);
-      const location = {
-        longitude: result.tags.GPSLongitude,
-        latitude: result.tags.GPSLatitude
-      };
-      this.$set(this, 'location', location);
-      this.$emit('onLocation', location);
+      try {
+        const buff = await this.info.arrayBuffer();
+        const parser = window.ExifParser.create(buff);
+        const result = await parser.parse()
+        this.$set(this, 'meta', result);
+        const location = {
+          longitude: result.tags.GPSLongitude,
+          latitude: result.tags.GPSLatitude
+        };
+        this.$set(this, 'location', location);
+        this.$emit('onLocation', location);
+      } catch (error) {
+        console.log('Failure extracting metadata')
+      }
       this.$emit('input', this.info);
     }
   }

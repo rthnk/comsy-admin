@@ -35,6 +35,7 @@
                   :type="showPasswd ? 'text' : 'password'"
                   name="input-10-1"
                   label="Password"
+                  @keypress.enter="loginAction"
                   @click:append="showPasswd = !showPasswd"
                 ></v-text-field>
 
@@ -87,14 +88,18 @@ export default {
           username: this.username,
           password: this.password
         };
-        const resp = await this.login(credentials);
-        if (resp) {
-          if (this.$route.query.next) {
-            return this.$router.push({path: this.$route.query.next});
+        try {
+          const resp = await this.login(credentials);
+          if (resp) {
+            if (this.$route.query.next) {
+              return this.$router.push({path: this.$route.query.next});
+            }
+            return this.$router.push({path: '/admin/root'});
           }
-          return this.$router.push({path: '/admin/root'});
+          alert('Invalid credentials');
+        } catch (error) {
+          console.error(error);
         }
-        alert('Invalid credentials');
       }
     },
     ...mapActions({

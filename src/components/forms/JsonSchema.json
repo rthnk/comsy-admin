@@ -1,0 +1,72 @@
+{
+  "type": "array",
+  "flormat": "table",
+  "title": "Fields",
+  "uniqueItems": true,
+  "items": {
+    "type": "object",
+    "title": "Field",
+    "properties": {
+      "field_name": {
+        "type": "string",
+        "title": "Field Name"
+      },
+      "type": {
+        "type": "string",
+        "title": "Field type",
+        "enum": [
+          "String",
+          "Number",
+          "Date"
+        ]
+      },
+      "default": {
+        "type": "string"
+      },
+      "required": {
+        "type": "boolean",
+        "title": "Required"
+      },
+      "enum": {
+        "type": "array",
+        "title": "Possible Options",
+        "items": {
+          "type": "string"
+        }
+      },
+      "uiMeta": {
+        "title": "UI Metadata",
+        "type": "object",
+        "flormat": "table",
+        "properties": {
+          "uiField": {
+            "title": "Field Type",
+            "type": "string",
+            "default": "text",
+            "enum": [
+              "text",
+              "multiselect",
+              "select",
+              "latlong",
+              "content",
+              "imagefile",
+              "file"
+            ]
+          },
+          "linkedWith": {
+            "title": "Linked with",
+            "type": "string"
+          },
+          "keyLabel": {
+            "title": "Link reference data",
+            "type": "object",
+            "properties": {
+              "key": {"type":"string"},
+              "label": {"type":"string"}
+            }
+          }
+        }
+      }
+    }
+  }
+}

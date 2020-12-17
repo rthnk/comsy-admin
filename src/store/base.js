@@ -1,5 +1,5 @@
 
-const axInstance = global.$axios;
+import { getAxiosInstance } from './auth';
 
 export function state() {
   return {

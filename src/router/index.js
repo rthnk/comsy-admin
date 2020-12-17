@@ -4,10 +4,6 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Admin from "../views/Admin.vue";
 
-import AdminRoot from "../components/AdminRoot.vue";
-import SettingsManager from "../components/SettingsManager.vue";
-import UsersManager from "../components/UsersManager.vue";
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -17,26 +13,14 @@ const routes = [
     component: Home
   },
   {
+    name: 'Admin',
     path: "/admin/",
-    component: Admin,
-    redirect: '/admin/root',
-    children: [
-      {
-        path: "root",
-        name: "Admin",
-        component: AdminRoot
-      },
-      {
-        path: "settings",
-        name: "Settings",
-        component: SettingsManager
-      },
-      {
-        path: "users",
-        name: "Users",
-        component: UsersManager
-      },
-    ]
+    redirect: '/admin/root'
+  },
+  {
+    name: 'AdminResource',
+    path: "/admin/:resource",
+    component: Admin
   },
   /*
   {

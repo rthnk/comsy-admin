@@ -45,6 +45,7 @@ export default {
         }
         if (this.map) {
           this.map.setView([newVal.latitude, newVal.longitude]);
+          this.map.invalidateSize(true);
         }
       }
       this.info = newVal;

@@ -1,5 +1,4 @@
-# comsy-admin
-An admin User interface to manage Comsy (COntent Management System)
+# admin
 
 ## Project setup
 ```
